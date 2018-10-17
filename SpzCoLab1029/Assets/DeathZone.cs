@@ -2,25 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeathZone : MonoBehaviour {
-   public enum Side
-    {
-        Right,
-        Left
-    }
+public class DeathZone : MonoBehaviour
+{
     [SerializeField]
     private Side side;
 
-   public void CheckSide()
+    public void CheckSide()
     {
         switch (side)
         {
             case Side.Right:
-                print("Right side wins");
+                GameManager.AddScore(Side.Left);
                 break;
             case Side.Left:
-                print("Left side wins");
+                GameManager.AddScore(Side.Right);
                 break;
         }
+        GameManager.ResetBall();
     }
 }

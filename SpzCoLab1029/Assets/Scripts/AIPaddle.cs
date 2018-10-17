@@ -7,11 +7,12 @@ public class AIPaddle : Paddle
     [SerializeField]
     private Transform ball;
     [SerializeField]
-    private int interval = 30;
+    protected int interval = 30;
     private int defaultInterval;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         defaultInterval = interval;
     }
     // Use this for initialization

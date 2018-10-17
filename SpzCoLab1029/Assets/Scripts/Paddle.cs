@@ -5,20 +5,9 @@ using UnityEngine;
 public class Paddle : MonoBehaviour
 {
     protected Rigidbody2D rigid2d;
-    private void Awake()
+    protected virtual void Awake()
     {
         rigid2d = GetComponent<Rigidbody2D>();
-    }
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     protected void Move(float value)
