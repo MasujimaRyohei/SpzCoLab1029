@@ -1,9 +1,8 @@
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
-[Bb]uild/
-[Bb]uilds/
-Assets/AssetStoreTools*
+SpzCoLab1029/[Ll]ibrary/
+SpzCoLab1029/[Tt]emp/
+SpzCoLab1029/[Oo]bj/
+SpzCoLab1029/[Bb]uild/
+SpzCoLab1029/[Bb]uilds/
 
 # Visual Studio cache directory
 .vs/
