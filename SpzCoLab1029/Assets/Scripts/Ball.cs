@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
@@ -13,9 +11,7 @@ public class Ball : MonoBehaviour
     }
     void Start()
     {
-        float x = Random.Range(-1.0f, 1.0f);
-        float y = Random.Range(-1.0f, 1.0f);
-        rigid2d.AddForce(new Vector2(x, y) * 500.0f);
+        Launch();
     }
 
     void FixedUpdate()
@@ -31,5 +27,12 @@ public class Ball : MonoBehaviour
         {
             collision.gameObject.GetComponent<DeathZone>().CheckSide();
         }
+    }
+
+    public void Launch()
+    {
+        float x = Random.Range(-1.0f, 1.0f);
+        float y = Random.Range(-1.0f, 1.0f);
+        rigid2d.AddForce(new Vector2(x, y) * 500.0f);
     }
 }

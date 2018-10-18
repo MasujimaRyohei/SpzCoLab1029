@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c75ceaac70e49418263ad67cd6f527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 10
   ball: {fileID: 0}
   interval: 30
 --- !u!212 &212175556370959152
