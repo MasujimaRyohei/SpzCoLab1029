@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 138056149}
   m_Layer: 0
   m_Name: Gimmic_Rotate
-  m_TagString: Untagged
+  m_TagString: Gimmick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -653,6 +653,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114758431140716616, guid: 2759bf6485b0aa149925c7e1cfebbb2d,
+        type: 2}
+      propertyPath: speed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114758431140716616, guid: 2759bf6485b0aa149925c7e1cfebbb2d,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2759bf6485b0aa149925c7e1cfebbb2d, type: 2}
   m_IsPrefabParent: 0
@@ -818,6 +828,25 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1 &1382040946 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1961795537091164, guid: 2759bf6485b0aa149925c7e1cfebbb2d,
+    type: 2}
+  m_PrefabInternal: {fileID: 907570677}
+--- !u!114 &1382040952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1382040946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c75ceaac70e49418263ad67cd6f527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 100
+  ball: {fileID: 250050038}
+  interval: 0
 --- !u!1 &1405351453
 GameObject:
   m_ObjectHideFlags: 0
@@ -985,8 +1014,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c75ceaac70e49418263ad67cd6f527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 50
   ball: {fileID: 250050038}
-  interval: 30
+  interval: 0
 --- !u!50 &1561880282
 Rigidbody2D:
   serializedVersion: 4

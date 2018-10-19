@@ -46,10 +46,10 @@ public class GameManager : MonoBehaviour
         switch (side)
         {
             case Side.Right:
-               instance. scoreRight++;
+                instance.scoreRight++;
                 break;
             case Side.Left:
-               instance. scoreLeft++;
+                instance.scoreLeft++;
                 break;
         }
 
@@ -63,6 +63,18 @@ public class GameManager : MonoBehaviour
 
     public static void ResetBall()
     {
-       instance.ball.transform.position = new Vector3(2.5f, 0, 0);
+        if (instance.scoreLeft > instance.scoreRight)
+        {
+            instance.ball.transform.position = new Vector3(2.5f, 0, 0);
+        }
+        else
+        {
+            instance.ball.transform.position = new Vector3(-2.5f, 0, 0);
+        }
+    }
+
+    public static IEnumerator CountDown()
+    {
+        yield return null;
     }
 }
