@@ -8,6 +8,7 @@ TagManager:
   - Paddle
   - Gimmick
   - Goal
+  - DeathZone
   layers:
   - Default
   - TransparentFX
@@ -44,4 +45,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 1923713685
+    locked: 0
+  - name: Paddle
+    uniqueID: 48156911
+    locked: 0
+  - name: Ball
+    uniqueID: 2774197665
     locked: 0

@@ -5,6 +5,8 @@ public class Ball : MonoBehaviour
     private Vector2 lastVelocity;
     private Rigidbody2D rigid2d;
 
+    [SerializeField] private AudioSource reflectSound;
+
     private void Awake()
     {
         rigid2d = GetComponent<Rigidbody2D>();
@@ -32,14 +34,23 @@ public class Ball : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Vector2 refrectVec = Vector2.Reflect(lastVelocity, collision.contacts[0].normal);
-        rigid2d.velocity = refrectVec;
-        rigid2d.velocity += new Vector2(0, Random.Range(-0.01f, 0.01f));
+        // ゴール時
         if (collision.gameObject.CompareTag("Goal"))
         {
             collision.gameObject.GetComponent<Goal>().CheckSide();
             Destroy(gameObject);
+            return;
         }
+
+        // 反射音の再生
+        reflectSound.PlayOneShot(reflectSound.clip);
+        
+        // 壁との当たり判定
+        Vector2 refrectVec = Vector2.Reflect(lastVelocity, collision.contacts[0].normal);
+        rigid2d.velocity = refrectVec;
+        rigid2d.velocity += new Vector2(0, Random.Range(-0.01f, 0.01f));
+   
+        // パドルとの当たり判定
         if (collision.gameObject.CompareTag("Paddle"))
         {
             if (transform.position.y < collision.transform.position.y)
@@ -53,6 +64,7 @@ public class Ball : MonoBehaviour
         }
     }
 
+    // 発射
     public void Launch()
     {
         rigid2d.simulated = true;

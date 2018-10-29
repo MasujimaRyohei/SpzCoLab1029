@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
     private GameManager gameManager;
 
     [SerializeField]
-    private Side side;
+    private ESide side;
 
     private void Start()
     {
@@ -18,11 +16,11 @@ public class Goal : MonoBehaviour
     {
         switch (side)
         {
-            case Side.Right:
-                gameManager.AddScore(Side.Left);
+            case ESide.Right:
+                gameManager.AddScore(ESide.Left);
                 break;
-            case Side.Left:
-                gameManager.AddScore(Side.Right);
+            case ESide.Left:
+                gameManager.AddScore(ESide.Right);
                 break;
         }
 

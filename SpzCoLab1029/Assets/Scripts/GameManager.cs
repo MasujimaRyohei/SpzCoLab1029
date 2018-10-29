@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -40,20 +39,14 @@ public class GameManager : MonoBehaviour
         StartGame();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void AddScore(Side side)
+    public void AddScore(ESide side)
     {
         switch (side)
         {
-            case Side.Right:
+            case ESide.Right:
                 scoreRight++;
                 break;
-            case Side.Left:
+            case ESide.Left:
                 scoreLeft++;
                 break;
         }
@@ -73,7 +66,7 @@ public class GameManager : MonoBehaviour
        ball = Instantiate(ballPrefab);
         ball.enabled = false;
 
-        if (scoreLeft > scoreRight)
+        if (scoreLeft < scoreRight)
         {
             ball.transform.position = new Vector3(2.5f, 0, 0);
         }
@@ -92,12 +85,12 @@ public class GameManager : MonoBehaviour
     {
         if (scoreLeft >= winPoint)
         {
-            StartWinAnimation(Side.Left);
+            StartWinAnimation(ESide.Left);
             return;
         }
         if (scoreRight >= winPoint)
         {
-            StartWinAnimation(Side.Right);
+            StartWinAnimation(ESide.Right);
             return;
         }
 
@@ -121,11 +114,11 @@ public class GameManager : MonoBehaviour
         LaunchBall();
     }
 
-    public void StartWinAnimation(Side side)
+    public void StartWinAnimation(ESide side)
     {
         StartCoroutine(WinAnimationCoroutine(side));
     }
-    private IEnumerator WinAnimationCoroutine(Side side)
+    private IEnumerator WinAnimationCoroutine(ESide side)
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(2.0f);
         panelResult.enabled = true;
@@ -135,12 +128,12 @@ public class GameManager : MonoBehaviour
         Color color;
         switch (side)
         {
-            case Side.Right:
+            case ESide.Right:
                 color = rightPaddle.GetComponent<SpriteRenderer>().color;
                 playerText = ColorUtility.ToHtmlStringRGB(color);
                 playerText = "<color=#"+ playerText + ">Right</color>";
                 break;
-            case Side.Left:
+            case ESide.Left:
 
                 color = leftPaddle.GetComponent<SpriteRenderer>().color;
                 playerText = ColorUtility.ToHtmlStringRGB(color);
