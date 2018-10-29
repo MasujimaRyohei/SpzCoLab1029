@@ -17,20 +17,28 @@ public class Ball : MonoBehaviour
     void FixedUpdate()
     {
         lastVelocity = rigid2d.velocity;
+
+        // 速度調整
         if(rigid2d.velocity.sqrMagnitude < 80.0f)
         {
             rigid2d.velocity *= 1.01f;
         }
-        rigid2d.AddForce(-transform.position.normalized * 0.1f);
+        else if(rigid2d.velocity.sqrMagnitude > 300.0f)
+        {
+            rigid2d.velocity *= 0.99f;
+        }
+
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         Vector2 refrectVec = Vector2.Reflect(lastVelocity, collision.contacts[0].normal);
         rigid2d.velocity = refrectVec;
-        if (collision.gameObject.CompareTag("DeathZone"))
+        rigid2d.velocity += new Vector2(0, Random.Range(-0.01f, 0.01f));
+        if (collision.gameObject.CompareTag("Goal"))
         {
-            collision.gameObject.GetComponent<DeathZone>().CheckSide();
+            collision.gameObject.GetComponent<Goal>().CheckSide();
+            Destroy(gameObject);
         }
         if (collision.gameObject.CompareTag("Paddle"))
         {
@@ -43,19 +51,24 @@ public class Ball : MonoBehaviour
                 rigid2d.velocity = new Vector2(rigid2d.velocity.x, rigid2d.velocity.y + 1f);
             }
         }
-        if(collision.gameObject.CompareTag("Gimmick"))
-        {
-            rigid2d.velocity *= 1.01f;
-        }
-        rigid2d.velocity *= 1.005f;
-
     }
 
     public void Launch()
     {
-        float x = Random.Range(-1.0f, 1.0f);
+        rigid2d.simulated = true;
+        float x = Random.Range(0, 2);
+        if(x == 0)
+        {
+            x = -1;
+        }
+        else
+        {
+            x = 1;
+        }
         float y = Random.Range(-1.0f, 1.0f);
         rigid2d.velocity = Vector2.zero;
         rigid2d.AddForce(new Vector2(x, y) * 500.0f);
     }
+
+ 
 }

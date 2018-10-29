@@ -4,10 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - DeathZone
   - Ball
   - Paddle
   - Gimmick
+  - Goal
   layers:
   - Default
   - TransparentFX

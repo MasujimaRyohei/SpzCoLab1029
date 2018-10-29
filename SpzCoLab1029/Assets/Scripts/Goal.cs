@@ -2,22 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeathZone : MonoBehaviour
+public class Goal : MonoBehaviour
 {
+    private GameManager gameManager;
+
     [SerializeField]
     private Side side;
+
+    private void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+    }
 
     public void CheckSide()
     {
         switch (side)
         {
             case Side.Right:
-                GameManager.AddScore(Side.Left);
+                gameManager.AddScore(Side.Left);
                 break;
             case Side.Left:
-                GameManager.AddScore(Side.Right);
+                gameManager.AddScore(Side.Right);
                 break;
         }
-        GameManager.ResetBall();
+
+        gameManager.StartGame();
     }
 }

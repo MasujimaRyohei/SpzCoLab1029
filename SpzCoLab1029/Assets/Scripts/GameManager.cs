@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
-
     [SerializeField]
     private Text textResult;
     [SerializeField]
@@ -19,20 +18,26 @@ public class GameManager : MonoBehaviour
     private int scoreRight;
 
     [SerializeField]
-    private Ball ball;
+    private Ball ballPrefab;
+    [HideInInspector]
+    public Ball ball;
+    [SerializeField]
+    private Paddle leftPaddle;
+    [SerializeField]
+    private Paddle rightPaddle;
+
+    [SerializeField]
+    private int winPoint;
 
     private void Awake()
     {
-        if (!instance)
-            instance = this;
-
         scoreLeft = 0;
         scoreRight = 0;
     }
     // Use this for initialization
     void Start()
     {
-
+        StartGame();
     }
 
     // Update is called once per frame
@@ -41,19 +46,21 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public static void AddScore(Side side)
+    public void AddScore(Side side)
     {
         switch (side)
         {
             case Side.Right:
-                instance.scoreRight++;
+                scoreRight++;
                 break;
             case Side.Left:
-                instance.scoreLeft++;
+                scoreLeft++;
                 break;
         }
 
-        instance.SetScore(instance.scoreLeft, instance.scoreRight);
+        SetScore(scoreLeft, scoreRight);
+
+    
     }
 
     private void SetScore(int left, int right)
@@ -61,20 +68,88 @@ public class GameManager : MonoBehaviour
         textScore.text = string.Format("{0} - {1}", left, right);
     }
 
-    public static void ResetBall()
+    public void SetBall()
     {
-        if (instance.scoreLeft > instance.scoreRight)
+       ball = Instantiate(ballPrefab);
+        ball.enabled = false;
+
+        if (scoreLeft > scoreRight)
         {
-            instance.ball.transform.position = new Vector3(2.5f, 0, 0);
+            ball.transform.position = new Vector3(2.5f, 0, 0);
         }
         else
         {
-            instance.ball.transform.position = new Vector3(-2.5f, 0, 0);
+            ball.transform.position = new Vector3(-2.5f, 0, 0);
         }
     }
 
-    public static IEnumerator CountDown()
+    public void LaunchBall()
     {
-        yield return null;
+        ball.enabled = true;
+    }
+
+    public void StartGame()
+    {
+        if (scoreLeft >= winPoint)
+        {
+            StartWinAnimation(Side.Left);
+            return;
+        }
+        if (scoreRight >= winPoint)
+        {
+            StartWinAnimation(Side.Right);
+            return;
+        }
+
+        StartCoroutine(StartGameCoroutine(3));
+    }
+
+    private IEnumerator StartGameCoroutine(int time)
+    {
+        SetBall();
+
+        panelResult.enabled = true;
+        // カウントダウン
+        WaitForSeconds waitTime = new WaitForSeconds(1.0f);
+        for (int i = time; i >= 0; i--)
+        {
+            textResult.text = i.ToString();
+            yield return waitTime;
+        }
+        textResult.text = "";
+        panelResult.enabled = false;
+        LaunchBall();
+    }
+
+    public void StartWinAnimation(Side side)
+    {
+        StartCoroutine(WinAnimationCoroutine(side));
+    }
+    private IEnumerator WinAnimationCoroutine(Side side)
+    {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(2.0f);
+        panelResult.enabled = true;
+        textResult.text = "Finish!!";
+        yield return waitForSeconds;
+        string playerText = "";
+        Color color;
+        switch (side)
+        {
+            case Side.Right:
+                color = rightPaddle.GetComponent<SpriteRenderer>().color;
+                playerText = ColorUtility.ToHtmlStringRGB(color);
+                playerText = "<color=#"+ playerText + ">Right</color>";
+                break;
+            case Side.Left:
+
+                color = leftPaddle.GetComponent<SpriteRenderer>().color;
+                playerText = ColorUtility.ToHtmlStringRGB(color);
+                playerText = "<color=#"+ playerText + ">Left</color>";
+                break;
+        }
+        textResult.text = string.Format("{0} Player \n won!!",playerText);
+        yield return waitForSeconds;
+        SceneManager.LoadScene("Title");
+
     }
 }

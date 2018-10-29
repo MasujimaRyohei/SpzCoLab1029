@@ -5,8 +5,6 @@ using UnityEngine;
 public class AIPaddle : Paddle
 {
     [SerializeField]
-    private Transform ball;
-    [SerializeField]
     protected int interval = 30;
     private int defaultInterval;
 
@@ -15,20 +13,18 @@ public class AIPaddle : Paddle
         base.Awake();
         defaultInterval = interval;
     }
-    // Use this for initialization
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
     {
+        if (gameManager.ball == null)
+            return;
+
         interval--;
         if (interval <= 0)
         {
             interval = defaultInterval;
-            if (ball.position.y > transform.position.y)
+            if (gameManager.ball.transform.position.y > transform.position.y)
                 Move(1.0f);
             else
                 Move(-1.0f);

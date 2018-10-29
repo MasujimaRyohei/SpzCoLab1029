@@ -2,13 +2,22 @@
 
 public class Paddle : MonoBehaviour
 {
+    protected GameManager gameManager;
+
     protected Rigidbody2D rigid2d;
 
     [SerializeField]
-    private float speed;
+    protected float speed;
+
     protected virtual void Awake()
     {
         rigid2d = GetComponent<Rigidbody2D>();
+    }
+
+    // Use this for initialization
+    protected void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     protected void Move(float value)
